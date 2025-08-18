@@ -1,3 +1,4 @@
+import { Outlet } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 const CardItem = ({ name, gen, img, id }) => {
@@ -12,6 +13,7 @@ const CardItem = ({ name, gen, img, id }) => {
       <Link to={`/characters/${id}`}>
         <button>Click</button>
       </Link>
+      <Outlet></Outlet>
     </div>
   );
 };

@@ -27,6 +27,10 @@ const CharactersList = () => {
     getData(count);
   }, [count]);
 
+  const firstPage = () => {
+    dispatch(setCount(1));
+  };
+
   const nextPage = () => {
     dispatch(setCount(count + 1));
   };
@@ -39,7 +43,7 @@ const CharactersList = () => {
     e.preventDefault();
     let { search } = e.target;
     let name = search.value;
-    
+
     axios
       .get(`https://rickandmortyapi.com/api/character?name=${name}`)
       .then((res) => {
@@ -48,21 +52,21 @@ const CharactersList = () => {
       .catch((err) => {
         console.log(err);
       });
-      e.target.search.value = '';
+    e.target.search.value = "";
   };
 
   return (
     <div>
       <div className="nav-link">
         <form onSubmit={handleSearch}>
-        <input
-          name="search"
-          className="input-s"
-          type="text"
-          placeholder="Character Name"
+          <input
+            name="search"
+            className="input-s"
+            type="text"
+            placeholder="Character Name"
           />
           <button type="submit">buscar</button>
-          </form>
+        </form>
       </div>
 
       <div className="box grid-responsive">
@@ -78,19 +82,26 @@ const CharactersList = () => {
       </div>
 
       <h3>Pagina {count}</h3>
+
       <div className="btn-c">
-        {count <= 1 ? null : (
-          <button onClick={() => beforPage()} className="btnn">
+        {count >= 3 && (
+          <button className="btnn first-page-btn" onClick={() => firstPage()}>
             ⏮️
           </button>
         )}
+
+        {count <= 1 ? null : (
+          <button className="btnn before-page-btn" onClick={() => beforPage()}>
+            ⏮️
+          </button>
+        )}
+
         {char.next ? (
-          <button className="btnn" onClick={() => nextPage()}>
+          <button className="btnn next-page-btn" onClick={() => nextPage()}>
             ⏭️
           </button>
         ) : null}
       </div>
-      <Outlet></Outlet>
     </div>
   );
 };
